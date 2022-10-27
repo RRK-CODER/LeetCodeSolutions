@@ -1,0 +1,1 @@
+We are checking the minimum of set's size() and c.size()/2. The two params that you are seeing in the line "unordered_set(begin(c), end(c))" is actually creating a set using vector.

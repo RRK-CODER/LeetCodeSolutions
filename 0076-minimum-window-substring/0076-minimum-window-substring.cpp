@@ -1,43 +1,35 @@
 class Solution {
 public:
-    string minWindow(string s, string t) {
-        string result;
-        if(s.empty() || t.empty()) return result;
+    string minWindow(string s, string p) {
+        int n1 = s.size();
+        int n2 = p.size();
+        if(n2>n1)return "";
         
-        unordered_map<char,int> map;
-        unordered_map<char,int> window;
-        for(int i=0; i<t.length(); i++) map[t[i]]++;
+        int mini = INT_MAX;
+        unordered_map<char,int> m1;
+        unordered_map<char,int> m2;
+        int count = 0,start =0, ans=0;
+        for(int i=0; i<n2; i++) m2[p[i]]++;
         
-        int minLength=INT_MAX;
-        int letterCounter=0;
-        for(int slow=0, fast=0; fast<s.length(); fast++)
-        {
-            char c=s[fast];
-            if(map.find(c)!=map.end())
-            {
-                    window[c]++;
-            if(window[c]<=map[c])
-            {
-                letterCounter++;
-            }
-                
-            }
+        for(int i=0; i<n1; i++){
+            m1[s[i]]++;
+            if(m2[s[i]] >= m1[s[i]])count++;
             
-        
-        if(letterCounter>=t.length())
-        {
-            while(map.find(s[slow])==map.end() || window[s[slow]]>map[s[slow]])
-            {
-                window[s[slow]]--;
-                slow++;
-            }
-            if(fast-slow+1<minLength)
-            {
-                minLength=fast-slow+1;
-                result=s.substr(slow,minLength);
-            }
+            if(count == n2){
+                //release
+                while(count == n2){
+                    if(mini > (i-start+1) ){
+                        mini = i+1-start;
+                        ans = start;
+                    }
+                    m1[s[start]]--;
+                    if(m2[s[start]] > m1[s[start]]) count--;
+                    start++;
+                }
             }
         }
-        return result;
+        if(mini == INT_MAX)return "";
+        else return s.substr(ans,mini);
     }
+    
 };

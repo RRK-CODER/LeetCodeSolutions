@@ -1,33 +1,31 @@
 class Solution {
-public:
-    int countSubsets(vector<int> &nums, int n, int m)
-    {
-        int t[n+1][m+1];
-        for(int i=0; i<=n; i++){
-            for(int j=0; j<=m; j++){
-                if(i==0) t[i][j]=0;
-                if(j==0) t[i][j]=1;
+    int findWays(vector<int> &num, int tar){
+        int n=num.size();
+        vector<int> prev(tar+1,0);
+        if(num[0] == 0) prev[0] =2;
+        else prev[0]=1;
+        if(num[0]!=0 && num[0]<=tar) prev[num[0]]=1;
+        for(int ind=1;ind<n; ind++){
+            vector<int> cur(tar+1, 0);
+            for(int target=0; target<=tar; target++){
+                int notTaken = prev[target];
+                int taken = 0;
+                if(num[ind]<=target)
+                    taken=prev[target-num[ind]];
+                
+                cur[target]=notTaken+taken;
             }
+            prev=cur;
         }
-        for(int i=1; i<=n; i++){
-            for(int j=0; j<=m; j++){
-                if(nums[i-1]<=j)
-                    t[i][j]=t[i-1][j-nums[i-1]]+t[i-1][j];
-                else
-                    t[i][j]=t[i-1][j];
-            }
-        }
-        return t[n][m];
+        return prev[tar];
     }
+public:
     int findTargetSumWays(vector<int>& nums, int target) {
-        target=abs(target);
-        int n=nums.size(), sum=0;
-        for(int i=0; i<n; i++)
-            sum+=nums[i];
-        int m=(sum+target)/2;
-        if(sum<target || (sum+target)%2!=0)
-        return 0;
-        return countSubsets(nums, n, m);
-        
-            }
+        int totalSum=0, n=nums.size();
+        for(int i=0; i<n; i++){
+            totalSum+=nums[i];
+        }
+        if(totalSum-target<0 || (totalSum-target)%2) return 0;
+        return findWays(nums, (totalSum-target)/2);
+    }
 };

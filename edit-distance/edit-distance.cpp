@@ -4,7 +4,7 @@ public:
          int n=s.size(), m=t.size();
         vector<int> prev(m+1,0), cur(m+1,0);
         for(int i=1; i<=m;i++) { prev[i]=i;}
-        for(int j=1; j<=n; j++) cur[0]=j;
+
 
         for(int i=1; i<=n; i++)
         {

@@ -16,8 +16,7 @@ public:
                 else
                     cur[j]=1+min(cur[j-1], min(prev[j], prev[j-1]));
             }
-            fill(prev.begin(), prev.end(),0);
-            swap(prev,cur);
+        prev=cur;
         }
         return prev[m];
     }

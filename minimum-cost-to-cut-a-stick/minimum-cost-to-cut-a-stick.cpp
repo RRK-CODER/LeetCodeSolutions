@@ -1,22 +1,24 @@
 class Solution {
 public:
-    int dp[102][102] = {};
-    int dfs(vector<int>& cuts, int i, int j)
-    {
-        if(j-i<=1)
-        return 0;
-        if(!dp[i][j])
-        {
-            dp[i][j] = INT_MAX;
-            for(auto k=i+1;k<j; ++k)
-            dp[i][j] = min(dp[i][j], cuts[j]-cuts[i] + dfs(cuts, i, k)+dfs(cuts, k, j));
-        }
-        return dp[i][j];
-    }
     int minCost(int n, vector<int>& cuts) {
-        cuts.push_back(0);
+        int c=cuts.size();
         cuts.push_back(n);
-        sort(begin(cuts), end(cuts));
-        return dfs(cuts,0, cuts.size()-1);
+        cuts.insert(cuts.begin(), 0);
+        sort(cuts.begin(), cuts.end());
+        
+        vector<vector<int>> dp(c+2, vector<int>(c+2,0));
+
+        for(int i=c; i>=1; i--){
+            for(int j=1; j<=c; j++){
+                if(i>j) continue;
+                int mini=INT_MAX;
+                for(int ind=i; ind<=j; ind++){
+        int cost = cuts[j+1]-cuts[i-1] + dp[i][ind-1] + dp[ind+1][j];
+                    mini=min(mini, cost);
+                }
+                dp[i][j]=mini;
+            }
+        }
+        return dp[1][c];
     }
 };

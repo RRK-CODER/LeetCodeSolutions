@@ -13,9 +13,7 @@ public:
                 ans += minm;
                 mp[num] -= minm;
                 mp[k-num] -= minm;
-
             }
-           
         }
         return ans;
     }

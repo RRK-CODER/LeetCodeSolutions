@@ -1,14 +1,14 @@
 class Solution {
 public:
-    vector<vector<int>> groupThePeople(vector<int>& groupSizes) {
-        unordered_map<int, vector<int>> ump;
+    vector<vector<int>> groupThePeople(vector<int>& v) {
+        unordered_map<int, vector<int>> mp;
         vector<vector<int>> ans;
-        int n = groupSizes.size();
+        int n = v.size();
         for(int i=0; i<n; ++i) {
-            ump[groupSizes[i]].push_back(i);
-            if(ump[groupSizes[i]].size() == groupSizes[i]) {
-                ans.push_back(ump[groupSizes[i]]);
-                ump[groupSizes[i]] = {};
+            mp[v[i]].push_back(i);
+            if(mp[v[i]].size() == v[i]) {
+                ans.push_back(mp[v[i]]);
+                mp[v[i]] = {};
             }
         }
         return ans;

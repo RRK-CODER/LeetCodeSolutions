@@ -1,20 +1,21 @@
 class Solution {
 public:
-    bool closeStrings(string word1, string word2) {
-       vector<int>one(26,0),two(26,0);
-        set<char> sone, stwo;
-        for(auto c: word1)
-        {
-            one[c-'a']++;
-            sone.insert(c);
+    bool closeStrings(string s, string t) {
+        if(s.size()!=t.size()) return false;
+        set<char> s1, s2;
+        vector<int> freq1(26,0), freq2(26,0);
+        for(int i=0; i<s.size(); i++){
+            s1.insert(s[i]);
+            s2.insert(t[i]);
+            freq1[s[i] - 'a']++;
+            freq2[t[i] - 'a']++;
         }
-        for(auto c: word2)
-        {
-            two[c-'a']++;
-            stwo.insert(c);
-        }
-        sort(one.begin(),one.end());
-        sort(two.begin(),two.end());
-        return sone==stwo and one==two;
+        sort(freq1.begin(), freq1.end());
+        sort(freq2.begin(), freq2.end());
+
+        if(s1==s2 && freq1==freq2)
+            return true;
+        else
+            return false;
     }
 };

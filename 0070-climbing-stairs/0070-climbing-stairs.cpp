@@ -1,15 +1,12 @@
 class Solution {
 public:
-    long long solve(int n,vector<long long > &dp)
-
-    {
-        if(n<0)    return 0;
-        if(n==0)    return 1;
-        if(dp[n]!=-1)    return dp[n];
-        return dp[n]=solve(n-1,dp)+solve(n-2,dp);
-    }
+    
     int climbStairs(int n) {
-        vector<long long> dp(n+1,-1);
-        return solve(n,dp);
+        vector<int> res(n+1, -1);
+        res[0]=1;
+        res[1]=1;
+        for(int i=2; i<=n; i++)
+            res[i]=res[i-2]+res[i-1];
+        return res[n];
     }
 };

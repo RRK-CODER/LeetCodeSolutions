@@ -1,18 +1,19 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-       int n=s.size(), l=0, r=n-1;
-       while(l<r){
-           while(l<r && !isalnum(s[l])){
-               l++;
+        int i=0, j=s.size()-1;
+            while(i<j)
+            {
+           while(i<j && !isalnum(s[i])){
+               i++;
            }
-           while(l<r && !isalnum(s[r])){
-               r--;
+           while(i<j && !isalnum(s[j])){
+               j--;
            }
-           if(tolower(s[l++])!= tolower(s[r--])){
+           if(tolower(s[i++])!= tolower(s[j--])){
                return false;
            }
-       } 
-       return true;
+            }
+        return true;
     }
 };

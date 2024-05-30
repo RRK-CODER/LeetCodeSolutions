@@ -1,25 +1,22 @@
 class Solution {
 public:
-    int change(int target, vector<int>& nums) {
- int n=nums.size();
-        vector<int> prev(target+1, 0), cur(target+1, 0);
-        for(int T=0; T<=target; T++)
-        {
-            if(T%nums[0]==0) prev[T]=1;
-        }
-        for(int ind=1; ind<n; ind++)
-        {
-            for(int T=0; T<=target; T++)
-            {
-                int notTake=prev[T];
-                int take=0;
-                if(nums[ind]<=T){
-                    take=cur[T-nums[ind]];
-                }
-                cur[T]=take+notTake;
+    int change(int tar, vector<int>& coins) {
+        int n= coins.size();
+        vector<long> prev(tar+1, 0);
+        for(int i=0; i<=tar; i++)
+            if(i%coins[0]==0) prev[i]=1;
+        
+        for(int ind=1; ind<n; ind++){
+            vector<long> cur(tar+1,0);
+            for(int target=0; target<=tar; target++){
+                long notTaken = prev[target];
+                long taken =0;
+                if(coins[ind]<=target)
+                    taken = cur[target-coins[ind]];
+                cur[target]=taken + notTaken;
             }
             prev=cur;
         }
-        return prev[target];
+        return prev[tar];
     }
 };
